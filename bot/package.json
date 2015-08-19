@@ -1,0 +1,23 @@
+{
+  "name": "jomwebot",
+  "version": "1.0.0",
+  "description": "A bot to register and check member's information",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/r0lodex/jomwebot.git"
+  },
+  "author": "Irfan Radzi <rolodex888@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/r0lodex/jomwebot/issues"
+  },
+  "homepage": "https://github.com/r0lodex/jomwebot#readme",
+  "dependencies": {
+    "vow-telegram-bot": "^0.1.0"
+  }
+}
