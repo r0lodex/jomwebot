@@ -15,7 +15,7 @@ var randomResponse = [
 	'Awak ni la. Kan saya kata belum siap. Tak faham lagi ke?',
 ]
 
-var i = Math.floor(4*Math.random());
+var i = Math.floor(3*Math.random());
 
 bot.on('message', function(data) {
 	if (data.text.charAt(0) === '/') {
