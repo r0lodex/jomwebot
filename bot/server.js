@@ -1,41 +1,96 @@
+// JOMWEBOT 0.1A August 2015
+// -------------------------
+
+var request = require('request'),
+	defer = require('deferred'),
+	env = (!process.env.BOT_TOKEN) ? require('./env.js') : undefined;
+
+var jwj_group_id = process.env.JWJ_ID || "-14943090";
 var _bot = require('vow-telegram-bot'),
 	bot = new _bot({
-		token: '82257237:AAFQx9upOKq9qPIKqEfm4w1pz3LONGsCFMQ',
+		token: process.env.BOT_TOKEN || null ,
 		polling: {
 			timeout: 3,
 			limit: 100
 		}
-	})
+	});
 
-var ran = [
-	"Nothing is as easy as it looks.",
-	"Everything takes longer than you think.",
-	"Anything that can go wrong will go wrong.",
-	"If there is a possibility of several things going wrong, the one that will cause the most damage will be the one to go wrong.",
-	"If there is a worse time for something to go wrong, it will happen then.",
-	"If anything simply cannot go wrong, it will anyway.",
-	"If you perceive that there are four possible ways in which a procedure can go wrong, and circumvent these, then a fifth way, unprepared for, will promptly develop.",
-	"Left to themselves, things tend to go from bad to worse.",
-	"If everything seems to be going well, you have obviously overlooked something.",
-	"Nature always sides with the hidden flaw.",
-	"Mother nature is a bitch.",
-	"It is impossible to make anything foolproof because fools are so ingenious.",
-	"Whenever you set out to do something, something else must be done first.",
-	"Every solution breeds new problems.",
-	"Trust everybody ... then cut the cards.",
-	"Two wrongs are only the beginning.",
-	"If at first you don't succeed, destroy all evidence that you tried.",
-	"To succeed in politics, it is often necessary to rise above your principles.",
-	"Exceptions prove the rule ... and wreck the budget.",
-	"Success always occurs in private, and failure in full view."
-]
+// -------------------------
 
-bot.on('message', function(data) {
-	if (data.text.charAt(0) === '/') {
-		var i = Math.floor((ran.length-1)*Math.random());
-		bot.sendMessage({
-			chat_id: data.chat.id,
-			text: ran[i]
+var req = {
+	callback: function(defer) {
+		return function(err, res, body) {
+			console.log(body)
+			if (err) {
+				defer.reject(err)
+			} else {
+				// Since the response is not always JSON,
+				// we need to have some checking in the resolved callbacks.
+				try {
+					var a = JSON.parse(body);
+				} catch(err) {
+					var a = body;
+				}
+				defer.resolve(a)
+			}
+		}
+	},
+	token: function() {
+		var q = defer(), _this = this;
+		request('http://mrjunior.my/jomweb/jwj', _this.callback(q));
+		return q.promise;
+	},
+	user: function(username) {
+		var q = defer(), _this = this,
+			options = { url: 'http://mrjunior.my/jomweb/api/members/'+username }
+		this.token().done(function(res) {
+			options.headers = { Authorization: 'Bearer '+ res.token };
+			request(options, _this.callback(q));
+		}, function(err) {
+			console.log('user error:', err)
+		});
+		return q.promise;
+	}
+};
+
+// -------------------------
+
+var botcommands = {
+	siapa: function(data, txtarray) {
+		var text = '';
+		req.user(txtarray[1]).done(function(res) {
+			var skills = res.skills.join(', ');
+			text += res.name + ', seorang ' + res.position + ' di ' + res.company +', ';
+			text += 'pandai ' + skills + ' dan sekarang tinggal di ' + res.location;
+			bot.sendMessage({
+				chat_id: data.chat.id,
+				text: text
+			})
+		}, function(err) {
+			console.log('async error: ', err)
+		})
+	},
+	solat: function(data) {
+		request('http://solatapi.herokuapp.com/api.php?place=jb', function(err, res, body) {
+			var a = JSON.parse(body)
+			bot.sendMessage({
+				chat_id: data.chat.id,
+				text: "Solat yang wajib ada 5. Subuh, Zohor, Asar, Isyak & Maghrib. Dah settle ke belum?"
+			})
 		})
 	}
-})
+};
+
+// -------------------------
+
+bot.on('message', function(data) {
+	console.log(data)
+	if (data.text.charAt(0) === '/') {
+		var a = data.text.split(' ');
+		try {
+			botcommands[a[0].slice(1)](data, a);
+		} catch(error) {
+			// Command is not supported
+		}
+	}
+});
