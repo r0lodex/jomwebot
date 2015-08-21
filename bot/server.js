@@ -59,8 +59,12 @@ var botcommands = {
 	siapa: function(data, txtarray) {
 		var text = '';
 		req.user(txtarray[1]).done(function(res) {
-			var skills = res.skills.join(', ');
-			text += res.name + ', seorang ' + res.position + ' di ' + res.company +', ';
+			var skills = (res.skills) ? res.skills.join(', ') : 'main mata je',
+				position = (res.position) ? res.position : 'yang mencari kerja',
+				company = (res.company) ? res.company : 'mana-mana yang kosong',
+				location = (res.location) ? res.location : 'dalam telegram ni je.';
+
+			text += res.name + ', seorang ' + position + ' di ' + company +', ';
 			text += 'pandai ' + skills + ' dan sekarang tinggal di ' + res.location;
 			bot.sendMessage({
 				chat_id: data.chat.id,
@@ -94,3 +98,19 @@ bot.on('message', function(data) {
 		}
 	}
 });
+
+
+
+
+
+function wscallback(response) {
+	console.log(response.data)
+}
+
+var ws = new Websocket('test');
+
+// Websocket's methods
+ws.
+
+
+
