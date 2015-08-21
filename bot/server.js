@@ -101,16 +101,3 @@ bot.on('message', function(data) {
 
 
 
-
-
-function wscallback(response) {
-	console.log(response.data)
-}
-
-var ws = new Websocket('test');
-
-// Websocket's methods
-ws.
-
-
-
