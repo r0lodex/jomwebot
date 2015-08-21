@@ -60,7 +60,7 @@ var botcommands = {
 		var text = '';
 		req.user(txtarray[1]).done(function(res) {
 			if (res.status == 200) {
-				var skills = (res.skills) ? res.skills.join(', ') : 'main mata je',
+				var skills = (res.skills.length) ? res.skills.join(', ') : 'main mata je',
 					position = (res.position) ? res.position : 'yang mencari kerja',
 					company = (res.company) ? res.company : 'mana-mana yang kosong',
 					location = (res.location) ? res.location : 'dalam telegram ni je.';
