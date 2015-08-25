@@ -53,6 +53,24 @@ var req = {
     }
 };
 
+var randtext = {
+    randomize: function(array) {
+        var i = Math.floor((array.length-1)*Math.random());
+        return i;
+    },
+    skills: ['main mata je'],
+    position: ['yang mencari kerja'],
+    company: ['mana-mana yang kosong'],
+    location: ['dalam telegram ni je.'],
+    filler: {
+        one: [', seorang '],
+        two: [' di '],
+        three: [', pandai '],
+        four: [' dan sekarang tinggal di ']
+    },
+    notfound: ['Tak jumpa la sapa tu.', 'Ha? Wujud ke dia tu?', 'Cuba try cari dia kat Jabatan Pendaftaran Negara.' ]
+}
+
 // -------------------------
 
 var botcommands = {
@@ -60,15 +78,15 @@ var botcommands = {
         var text = '';
         req.user(txtarray[1]).done(function(res) {
             if (res.status == 200) {
-                var skills = (res.skills.length) ? res.skills.join(', ') : 'main mata je',
-                    position = (res.position) ? res.position : 'yang mencari kerja',
-                    company = (res.company) ? res.company : 'mana-mana yang kosong',
-                    location = (res.location) ? res.location : 'dalam telegram ni je.';
+                var skills = (res.skills.length) ? res.skills.join(', ') : randtext.skills[randtext.randomize(randtext.skills)],
+                    position = (res.position) ? res.position : randtext.position[randtext.randomize(randtext.position)],
+                    company = (res.company) ? res.company : randtext.company[randtext.randomize(randtext.company)],
+                    location = (res.location) ? res.location : randtext.location[randtext.randomize(randtext.location)];
 
-                text += res.name + ', seorang ' + position + ' di ' + company +', ';
-                text += 'pandai ' + skills + ' dan sekarang tinggal di ' + location;
+                text += res.name + randtext.filler.one[randtext.randomize(randtext.filler.one)] + position + randtext.filler.two[randtext.randomize(randtext.filler.two)] + company;
+                text += randtext.filler.three[randtext.randomize(randtext.filler.three)] + skills + randtext.filler.four[randtext.randomize(randtext.filler.four)] + location;
             } else {
-                text = 'Tak jumpa la sapa tu.'
+                text = randtext.notfound[randtext.randomize(randtext.notfound)]
             }
             bot.sendMessage({
                 chat_id: data.chat.id,
@@ -102,6 +120,17 @@ bot.on('message', function(data) {
         }
     }
 });
+
+// Randomize text to prevent playful bitches.
+/*txts = [0,1,2,3,4,5];
+var i = Math.floor((txts.length-1)*Math.random());*/
+
+
+
+
+
+
+
 
 
 
