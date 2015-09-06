@@ -58,7 +58,7 @@ var randtext = {
         var i = Math.floor((array.length-1)*Math.random());
         return i;
     },
-    skills: ['dalam permainan mata', 'membuat orang ketawa', 'menjahit', ''],
+    skills: ['dalam permainan mata', 'membuat orang ketawa', 'menjahit agaknya', ''],
     position: ['yang mencari kerja', 'yang sedang berkelana', ''],
     company: ['mana-mana sahaja', 'Malaysia', 'pejabat-pejabat tanah', ''],
     location: ['dalam group telegram JomWeb Johor.', 'tempat yang belum diketahui lokasinya.', 'Malaysia, mungkin?', ''],
