@@ -58,17 +58,17 @@ var randtext = {
         var i = Math.floor((array.length-1)*Math.random());
         return i;
     },
-    skills: ['dalam permainan mata', 'membuat orang ketawa', 'menjahit'],
+    skills: ['dalam permainan mata', 'membuat orang ketawa', 'menjahit', ''],
     position: ['yang mencari kerja', 'sedang berkelana', ''],
-    company: ['mana-mana sahaja', 'Malaysia', 'pejabat-pejabat tanah'],
-    location: ['dalam telegram ni je.', 'tempat yang belum diketahui lokasinya.', 'Malaysia, mungkin?'],
+    company: ['mana-mana sahaja', 'Malaysia', 'pejabat-pejabat tanah', ''],
+    location: ['dalam telegram ni je.', 'tempat yang belum diketahui lokasinya.', 'Malaysia, mungkin?', ''],
     filler: {
         one: [', seorang ', ''],
         two: [' di '],
-        three: [', pandai ', ', berkemahiran ', ', master '],
-        four: [' dan sekarang tinggal di ', ' dan menetap di ', ', mengembara di ']
+        three: [', pandai ', ', berkemahiran ', ', master ', ''],
+        four: [' dan sekarang tinggal di ', ' dan menetap di ', ', mengembara di ', '']
     },
-    notfound: ['Tak jumpa la sapa tu.', 'Ha? Wujud ke dia tu?', 'Cuba try cari dia kat Jabatan Pendaftaran Negara.' ]
+    notfound: ['Tak jumpa la sapa tu.', 'Ha? Wujud ke dia tu?', 'Cuba try cari dia kat Jabatan Pendaftaran Negara.', '' ]
 }
 
 // -------------------------
