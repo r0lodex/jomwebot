@@ -59,11 +59,11 @@ var randtext = {
         return i;
     },
     skills: ['dalam permainan mata', 'membuat orang ketawa', 'menjahit', ''],
-    position: ['yang mencari kerja', 'sedang berkelana', ''],
+    position: ['yang mencari kerja', 'yang sedang berkelana', ''],
     company: ['mana-mana sahaja', 'Malaysia', 'pejabat-pejabat tanah', ''],
     location: ['dalam telegram ni je.', 'tempat yang belum diketahui lokasinya.', 'Malaysia, mungkin?', ''],
     filler: {
-        one: [', seorang ', ''],
+        one: [', seorang '],
         two: [' di '],
         three: [', pandai ', ', berkemahiran ', ', master ', ''],
         four: [' dan sekarang tinggal di ', ' dan menetap di ', ', mengembara di ', '']
