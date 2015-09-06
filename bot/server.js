@@ -66,7 +66,7 @@ var randtext = {
         one: [', seorang ', ''],
         two: [' di '],
         three: [', pandai ', ', berkemahiran ', ', master '],
-        four: [' dan sekarang tinggal di ', ' dan menetep di ', ', mengembara di ']
+        four: [' dan sekarang tinggal di ', ' dan menetap di ', ', mengembara di ']
     },
     notfound: ['Tak jumpa la sapa tu.', 'Ha? Wujud ke dia tu?', 'Cuba try cari dia kat Jabatan Pendaftaran Negara.' ]
 }
