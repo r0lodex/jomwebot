@@ -58,15 +58,15 @@ var randtext = {
         var i = Math.floor((array.length-1)*Math.random());
         return i;
     },
-    skills: ['main mata je'],
-    position: ['yang mencari kerja'],
-    company: ['mana-mana yang kosong'],
-    location: ['dalam telegram ni je.'],
+    skills: ['dalam permainan mata', 'membuat orang ketawa', 'menjahit'],
+    position: ['yang mencari kerja', 'sedang berkelana', ''],
+    company: ['mana-mana sahaja', 'Malaysia', 'pejabat-pejabat tanah'],
+    location: ['dalam telegram ni je.', 'tempat yang belum diketahui lokasinya.', 'Malaysia, mungkin?'],
     filler: {
-        one: [', seorang '],
+        one: [', seorang ', ''],
         two: [' di '],
-        three: [', pandai '],
-        four: [' dan sekarang tinggal di ']
+        three: [', pandai ', ', berkemahiran ', ', master '],
+        four: [' dan sekarang tinggal di ', ' dan menetep di ', ', mengembara di ']
     },
     notfound: ['Tak jumpa la sapa tu.', 'Ha? Wujud ke dia tu?', 'Cuba try cari dia kat Jabatan Pendaftaran Negara.' ]
 }
@@ -120,10 +120,6 @@ bot.on('message', function(data) {
         }
     }
 });
-
-// Randomize text to prevent playful bitches.
-/*txts = [0,1,2,3,4,5];
-var i = Math.floor((txts.length-1)*Math.random());*/
 
 
 
