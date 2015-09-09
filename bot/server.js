@@ -15,6 +15,8 @@ var _bot = require('vow-telegram-bot'),
         }
     });
 
+var jwj_api_url = process.env.JWJ_API_URL || 'http://mrjunior.my/jomweb'
+
 // -------------------------
 
 var req = {
@@ -37,13 +39,13 @@ var req = {
     },
     token: function() {
         var q = defer(), _this = this;
-        request('http://mrjunior.my/jomweb/jwj', _this.callback(q));
+        request(jwj_api_url + '/jwj', _this.callback(q));
         return q.promise;
     },
     members: function(username) {
         var q = defer(), _this = this,
             uname = (username) ? '/'+username: '',
-            options = { url: 'http://mrjunior.my/jomweb/api/members'+uname }
+            options = { url: jwj_api_url + '/api/members'+uname }
         this.token().done(function(res) {
             options.headers = { Authorization: 'Bearer '+ res.token };
             request(options, _this.callback(q));

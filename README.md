@@ -10,3 +10,8 @@
 ## Initialize Server
 * `npm install -g nodemon`
 * `nodemon server.js`
+
+## Development
+Point Members API url to your local in `env.js`:
+
+    process.env['JWJ_API_URL'] = 'http://localhost:4000';    
