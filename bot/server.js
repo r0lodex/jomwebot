@@ -22,7 +22,6 @@ var jwj_api_url = process.env.JWJ_API_URL || 'http://mrjunior.my/jomweb'
 var req = {
     callback: function(defer) {
         return function(err, res, body) {
-            console.log(body)
             if (err) {
                 defer.reject(err)
             } else {
@@ -105,26 +104,16 @@ var botcommands = {
     ahli: function(data) {
         req.members().done(function(res) {
             var text = 'Senarai ahli Jomweb berdaftar: \n\n';
-            if (res.status == 200) {
-                var job = '';
-                try {
-                    res.forEach(function(k,v) {
-                        job = (v.position) ? v.position + '\n':'Unknown \n';
-                        if (v.name != undefined) {
-                            text += '#jwj: ' + v.name + ': ' + job;
-                        }
-                    })
-                } catch(e) {
-                    // Not a proper array
-                    Object.keys(res).forEach(function(k,v) {
-                        job = (res[k].position) ? res[k].position + '\n':'Unknown \n';
-                        if (res[k].name != undefined) {
-                            text += '#jwj: ' + res[k].name + ': ' + job;
-                        }
-                    })
-                }
-            } else {
-
+            var job = '';
+            try {
+                res.forEach(function(v) {
+                    job = (v.position) ? v.position + '\n':'Unknown \n';
+                    if (v.name != undefined) {
+                        text += '#jwj: ' + v.name + ': ' + job;
+                    }
+                })
+            } catch(e) {
+                console.log('Invalid JSON Array')
             }
             bot.sendMessage({
                 chat_id: data.chat.id,
@@ -146,7 +135,7 @@ var botcommands = {
 // -------------------------
 
 bot.on('message', function(data) {
-    console.log(data)
+    // console.log(data)
     if (data.new_chat_participant) {
         bot.sendMessage({
             chat_id: data.chat.id,
