@@ -17,6 +17,7 @@ var randtext = {
         four: [' dan sekarang tinggal di ', ' dan menetap di ', ', penunggu tetap di ']
     },
     notfound: ['Tak jumpa la sapa tu.', 'Wujud ke dia tu?', 'Cuba try cari dia kat Jabatan Pendaftaran Negara.' ],
+    noargs: ['Kena tulis la nama baru boleh cari sapa.', 'Nak cari sapa?', 'Cuba bagi nama, senang la sikit nak cari.'],
     daftar: {
         init: ['Nak daftar? Kasi nama penuh/glamor dulu.', 'Hello. Dengar cerita nak daftar? Nama penuh apa? Nama glamor pun boleh.', 'Saya memang suka daftarkan orang ni. Cer bagi nama penuh.'],
         sorry: ['Pendaftaran melalui Telegram masih belum tersedia. Harap maaf.', 'Sorry. Borang pendaftaran belum fotostat.', 'Kalau nak daftar, PM saya.']
@@ -50,7 +51,11 @@ module.exports = function BotCommands(req, bot) {
                     if (res.social.twitter.uri) text += 'Twitter: ' + res.social.twitter.uri + '\n';
                     if (res.social.twitter.uri) text += 'GitHub: ' + res.social.github.uri + '\n';
                 } else {
-                    text = txtarray[1] + '? ' + randtext.notfound[randtext.randomize(randtext.notfound)]
+                    if (txtarray[1]) {
+                        text = txtarray[1] + '? ' + randtext.notfound[randtext.randomize(randtext.notfound)]
+                    } else {
+                        text = randtext.noargs[randtext.randomize(randtext.noargs)]
+                    }
                 }
                 bot.sendMessage({
                     chat_id: data.chat.id,
