@@ -24,6 +24,9 @@ var randtext = {
     }
 };
 
+// Include moment
+var moment = require('moment');
+
 // Bot Command Modules
 // -------------------------
 module.exports = function BotCommands(req, bot) {
@@ -85,12 +88,39 @@ module.exports = function BotCommands(req, bot) {
                 })
             })
         },
-        solat: function(data) {
-            request('http://solatapi.herokuapp.com/api.php?place=jb', function(err, res, body) {
-                var a = JSON.parse(body)
+        solat: function(data, txtarray, request) {
+            request('http://mpt.i906.my/mpt.json?code=jhr-2&filter=1', function(err, res, body) {
+                
+                var w = {
+                    'subuh': 0,
+                    'zohor': 2,
+                    'asar': 3,
+                    'maghrib': 4,
+                    'isyak': 5
+                };
+
+                var b = JSON.parse(body)
+                var t = b.response.times;
+                var s = txtarray[1];
+                var waktuRaw = t[w[s]];
+                var msg = '';
+
+                if (waktuRaw != undefined) {
+                    var waktu = moment.unix(t[w[txtarray[1]]]).format('HH:mm');
+                    msg = 'Waktu solat ' + s + ' adalah pada jam ' + waktu.toString();
+
+                } else {
+
+                    msg = 'Solat apa tu? Lima waktu solat yang telah disyariatkan adalah:\n';
+                    for (var i in w) {
+                        msg += '/solat ' + i + '\n';
+                    }
+
+                }
+
                 bot.sendMessage({
                     chat_id: data.chat.id,
-                    text: "Solat yang wajib ada 5. Subuh, Zohor, Asar, Isyak & Maghrib. Dah settle ke belum?"
+                    text: msg
                 })
             })
         }
