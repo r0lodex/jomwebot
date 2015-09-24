@@ -92,31 +92,59 @@ module.exports = function BotCommands(req, bot) {
             request('http://mpt.i906.my/mpt.json?code=jhr-2&filter=1', function(err, res, body) {
                 
                 var w = {
-                    'subuh': 0,
-                    'zohor': 2,
-                    'asar': 3,
-                    'maghrib': 4,
-                    'isyak': 5
+                    'subuh': {
+                        'index': 0
+                    },
+                    'zuhur': {
+                        'index': 2
+                    },
+                    'asar': {
+                        'index': 3
+                    },
+                    'maghrib': {
+                        'index': 4
+                    },
+                    'isyak': {
+                        'index': 5
+                    }
                 };
 
-                var b = JSON.parse(body)
-                var t = b.response.times;
+                var t = JSON.parse(body).response.times;
                 var s = txtarray[1];
-                var waktuRaw = t[w[s]];
                 var msg = '';
+                var closest;
 
-                if (waktuRaw != undefined) {
-                    var waktu = moment.unix(t[w[txtarray[1]]]).format('HH:mm');
-                    msg = 'Waktu solat ' + s + ' adalah pada jam ' + waktu.toString();
+                // Loop through solat times
+                for (var i in w) {
 
+                    // Get time for each solat
+                    var unix = moment.unix(t[w[i].index]);
+                    w[i].time = unix;
+                    var diff = unix.diff(moment(), 'minutes');
+
+                    // Get next solat time
+                    if (diff >= 0 && closest == undefined) {
+                        closest = i;
+                    }
+                }
+
+                if (s != undefined) {
+                    msg = 'Waktu solat ' + s + ' adalah pada jam ' + w[s].time.format('HH:mm');
                 } else {
 
-                    msg = 'Solat apa tu? Lima waktu solat yang telah disyariatkan adalah:\n';
+                    if (closest != undefined)
+                        msg += 'In sya Allah lepas ni solat ' + closest + ' (' + w[closest].time.format('HH:mm') + ')\n\n';
+
+                    if (typeof w[s] == undefined)
+                        msg += 'Solat apa tu? ';
+
+                    msg += 'Waktu solat harini:\n';
                     for (var i in w) {
-                        msg += '/solat ' + i + '\n';
+                        msg += '/solat ' + i + ' (' + w[i].time.format('HH:mm') + ')\n';
                     }
 
                 }
+                msg += '\n"Dan dirikankah solat, tunaikanlah zakat dan ruku\'lah berserta orang-orang yang ruku\'"\nAl-Baqarah: 43';
 
                 bot.sendMessage({
                     chat_id: data.chat.id,
