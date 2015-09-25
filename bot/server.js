@@ -40,8 +40,9 @@ bot.on('message', function(data) {
         } else if (data.text.charAt(0) === '/') {
             var a = data.text.split(' ');
             try {
-                botcommands[a[0].slice(1)](data, a);
+                botcommands[a[0].slice(1)](data, a, request);
             } catch(error) {
+                console.log(error);
                 bot.sendMessage({
                     chat_id: data.chat.id,
                     text: 'Belum reti la macam mana nak ' + a
