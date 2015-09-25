@@ -110,10 +110,10 @@ module.exports = function BotCommands(req, bot) {
                     }
                 };
 
-                var t = JSON.parse(body).response.times;
-                var s = txtarray[1];
-                var msg = '';
-                var closest;
+                var t = JSON.parse(body).response.times, 
+                    s = txtarray[1], 
+                    msg = '', 
+                    closest;
 
                 // Loop through solat times
                 for (var i in w) {
