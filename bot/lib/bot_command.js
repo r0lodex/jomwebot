@@ -89,7 +89,8 @@ module.exports = function BotCommands(req, bot) {
             })
         },
         solat: function(data, txtarray, request) {
-            request('http://mpt.i906.my/mpt.json?code=jhr-2&filter=1', function(err, res, body) {
+            var url = 'http://mpt.i906.my/mpt.json?code=jhr-2&filter=1';
+            request(url, function(err, res, body) {
                 
                 var w = {
                     'subuh': {
@@ -120,16 +121,15 @@ module.exports = function BotCommands(req, bot) {
                     // Get time for each solat
                     var unix = moment.unix(t[w[i].index]);
                     w[i].time = unix;
-                    var diff = unix.diff(moment(), 'minutes');
 
                     // Get next solat time
-                    if (diff >= 0 && closest == undefined) {
+                    if (unix.diff(moment(), 'minutes') >= 0 && closest == undefined) {
                         closest = i;
                     }
                 }
 
                 if (s != undefined) {
-                    msg = 'Waktu solat ' + s + ' adalah pada jam ' + w[s].time.format('HH:mm');
+                    msg = 'Waktu solat ' + s + ' bagi kawasan Johor Bahru adalah pada jam ' + w[s].time.format('HH:mm') + '\n';
                 } else {
 
                     if (closest != undefined)
@@ -138,12 +138,13 @@ module.exports = function BotCommands(req, bot) {
                     if (typeof w[s] == undefined)
                         msg += 'Solat apa tu? ';
 
-                    msg += 'Waktu solat harini:\n';
+                    msg += 'Waktu solat harini (Johor Bahru):\n';
                     for (var i in w) {
                         msg += '/solat ' + i + ' (' + w[i].time.format('HH:mm') + ')\n';
                     }
 
                 }
+                msg += '\nSumber: ' + url + '\n';
                 msg += '\n"Dan dirikankah solat, tunaikanlah zakat dan ruku\'lah berserta orang-orang yang ruku\'"\nAl-Baqarah: 43';
 
                 bot.sendMessage({
