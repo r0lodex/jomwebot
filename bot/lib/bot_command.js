@@ -140,7 +140,7 @@ module.exports = function BotCommands(req, bot) {
                         if (cur.day() == 5 && closest == 'zuhur') 
                             next = 'Jumaat';
 
-                        msg += 'In sya Allah lepas ni solat ' + next + ' (' + w[closest].time.format('HH:mm') + ')\n\n';
+                        msg += 'In sya Allah lepas ni solat ' + next + ' pada jam ' + w[closest].time.format('HH:mm') + '\n\n';
                     }
 
                     if (typeof w[s] == undefined)
