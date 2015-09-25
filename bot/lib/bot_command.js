@@ -145,7 +145,7 @@ module.exports = function BotCommands(req, bot) {
 
                 }
                 msg += '\nSumber: ' + url + '\n';
-                msg += '\n"Dan dirikankah solat, tunaikanlah zakat dan ruku\'lah berserta orang-orang yang ruku\'"\nAl-Baqarah: 43';
+                msg += '\n"Dan dirikanlah solat, tunaikanlah zakat dan ruku\'lah berserta orang-orang yang ruku\'"\nAl-Baqarah: 43';
 
                 bot.sendMessage({
                     chat_id: data.chat.id,
