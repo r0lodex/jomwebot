@@ -113,6 +113,7 @@ module.exports = function BotCommands(req, bot) {
                 var t = JSON.parse(body).response.times, 
                     s = txtarray[1], 
                     msg = '', 
+                    cur = moment(),
                     closest;
 
                 // Loop through solat times
@@ -123,7 +124,7 @@ module.exports = function BotCommands(req, bot) {
                     w[i].time = unix;
 
                     // Get next solat time
-                    if (unix.diff(moment(), 'minutes') >= 0 && closest == undefined) {
+                    if (unix.diff(cur, 'minutes') >= 0 && closest == undefined) {
                         closest = i;
                     }
                 }
@@ -132,8 +133,15 @@ module.exports = function BotCommands(req, bot) {
                     msg = 'Waktu solat ' + s + ' bagi kawasan Johor Bahru adalah pada jam ' + w[s].time.format('HH:mm') + '\n';
                 } else {
 
-                    if (closest != undefined)
-                        msg += 'In sya Allah lepas ni solat ' + closest + ' (' + w[closest].time.format('HH:mm') + ')\n\n';
+                    if (closest != undefined) {
+                        var next = closest;
+
+                        // Friday
+                        if (cur.day() == 5 && closest == 'zuhur') 
+                            next = 'Jumaat';
+
+                        msg += 'In sya Allah lepas ni solat ' + next + ' (' + w[closest].time.format('HH:mm') + ')\n\n';
+                    }
 
                     if (typeof w[s] == undefined)
                         msg += 'Solat apa tu? ';
