@@ -90,68 +90,41 @@ module.exports = function BotCommands(req, bot) {
         },
         solat: function(data, txtarray, request) {
             var url = 'http://mpt.i906.my/mpt.json?code=jhr-2&filter=1';
-            request(url, function(err, res, body) {
-                
-                var w = {
-                    'subuh': {
-                        'index': 0
-                    },
-                    'zuhur': {
-                        'index': 2
-                    },
-                    'asar': {
-                        'index': 3
-                    },
-                    'maghrib': {
-                        'index': 4
-                    },
-                    'isyak': {
-                        'index': 5
-                    }
-                };
-
-                var t = JSON.parse(body).response.times, 
-                    s = txtarray[1], 
-                    msg = '', 
+            request(url, function(err, res, body) {                
+                var w = ['subuh', 'syuruk', 'zuhur', 'asar', 'maghrib', 'isyak'], 
+                    t = JSON.parse(body).response.times, 
+                    msg = 'Waktu solat harini (Johor Bahru):\n', 
+                    next,
                     cur = moment(),
                     closest;
 
                 // Loop through solat times
-                for (var i in w) {
+                for (var i = 0; i < w.length; i++) {
+                    // Skip syuruk - not a solat time
+                    if (i == 1)
+                        continue;
 
-                    // Get time for each solat
-                    var unix = moment.unix(t[w[i].index]);
-                    w[i].time = unix;
+                    var unix = moment.unix(t[i]), 
+                        time = unix.format('HH:mm');
 
                     // Get next solat time
                     if (unix.diff(cur, 'minutes') >= 0 && closest == undefined) {
-                        closest = i;
-                    }
-                }
 
-                if (s != undefined) {
-                    msg = 'Waktu solat ' + s + ' bagi kawasan Johor Bahru adalah pada jam ' + w[s].time.format('HH:mm') + '\n';
-                } else {
-
-                    if (closest != undefined) {
-                        var next = closest;
-
+                        closest = w[i];
                         // Friday
-                        if (cur.day() == 5 && closest == 'zuhur') 
-                            next = 'Jumaat';
+                        if (cur.day() == 5 && w[i] == 'zuhur') 
+                            closest = 'Jumaat';
 
-                        msg += 'In sya Allah lepas ni solat ' + next + ' pada jam ' + w[closest].time.format('HH:mm') + '\n\n';
+                        next = 'In sya Allah lepas ni solat ' + closest + ' pada jam ' + time + '\n\n';
+
                     }
-
-                    if (typeof w[s] == undefined)
-                        msg += 'Solat apa tu? ';
-
-                    msg += 'Waktu solat harini (Johor Bahru):\n';
-                    for (var i in w) {
-                        msg += '/solat ' + i + ' (' + w[i].time.format('HH:mm') + ')\n';
-                    }
-
+                    msg += '/solat ' + w[i] + ' (' + time + ')\n';
                 }
+
+                // Prepend next solat time
+                if (next != undefined)
+                    msg = next + msg;
+
                 msg += '\nSumber: ' + url + '\n';
                 msg += '\n"Dan dirikanlah solat, tunaikanlah zakat dan ruku\'lah berserta orang-orang yang ruku\'"\nAl-Baqarah: 43';
 
