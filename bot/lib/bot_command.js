@@ -109,18 +109,15 @@ module.exports = function BotCommands(req, bot) {
 
                     // Get next solat time
                     if (unix.diff(cur, 'minutes') >= 0 && closest == undefined) {
-
                         closest = w[i];
                         // Friday
                         if (cur.day() == 5 && w[i] == 'zuhur') 
                             closest = 'Jumaat';
 
                         next = 'In sya Allah lepas ni solat ' + closest + ' pada jam ' + time + '\n\n';
-
                     }
                     msg += '/solat ' + w[i] + ' (' + time + ')\n';
                 }
-
                 // Prepend next solat time
                 if (next != undefined)
                     msg = next + msg;
