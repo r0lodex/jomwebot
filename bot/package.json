@@ -19,6 +19,7 @@
   "homepage": "https://github.com/r0lodex/jomwebot#readme",
   "dependencies": {
     "deferred": "^0.7.2",
+    "moment": "^2.10.6",
     "request": "^2.61.0",
     "vow-telegram-bot": "^0.1.0"
   }
