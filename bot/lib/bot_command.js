@@ -6,7 +6,7 @@ var randtext = {
         var i = Math.floor((array.length)*Math.random());
         return i;
     },
-    skills: ['dalam permainan mata', 'membuat orang ketawa', 'menjahit agaknyaAut'],
+    skills: ['dalam permainan mata', 'membuat orang ketawa', 'menjahit agaknya'],
     position: ['yang mencari kerja', 'yang sedang berkelana'],
     company: ['mana-mana sahaja', 'Malaysia', 'pejabat-pejabat tanah'],
     location: ['dalam group telegram JomWeb Johor.', 'tempat yang belum diketahui lokasinya.', 'Malaysia, mungkin?'],
@@ -91,7 +91,7 @@ module.exports = function BotCommands(req, bot) {
         solat: function(data, txtarray, request) {
             var url = 'http://mpt.i906.my/mpt.json?code=jhr-2&filter=1';
             request(url, function(err, res, body) {                
-                var w = ['subuh', 'syuruk', 'zuhur', 'asar', 'maghrib', 'isyak'], 
+                var w = ['Subuh', 'Syuruk', 'Zuhur', 'Asar', 'Maghrib', 'Isyak'], 
                     t = JSON.parse(body).response.times, 
                     msg = 'Waktu solat harini (Johor Bahru):\n', 
                     next,
@@ -111,7 +111,7 @@ module.exports = function BotCommands(req, bot) {
                     if (unix.diff(cur, 'minutes') >= 0 && closest == undefined) {
                         closest = w[i];
                         // Friday
-                        if (cur.day() == 5 && w[i] == 'zuhur') 
+                        if (cur.day() == 5 && w[i] == 'Zuhur') 
                             closest = 'Jumaat';
 
                         next = 'In sya Allah lepas ni solat ' + closest + ' pada jam ' + time + '\n\n';

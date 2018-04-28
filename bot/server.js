@@ -35,7 +35,7 @@ bot.on('message', function(data) {
         if (data.new_chat_participant) {
             bot.sendMessage({
                 chat_id: data.chat.id,
-                text: 'Selamat datang ' + data.new_chat_participant.first_name + '!\nKalau boleh, panas-panaskan badan dengan sedikit intro. Kerja kat mana, dan bidang kepakaran. Yang lain nanti kitorang tanya2 la ye. \n\nKalau nak kenal orang2 dalam ni, klik /ahli atau taip /siapa [nama ahli].'
+                text: 'Selamat datang ' + data.new_chat_participant.first_name + '!\nKalau boleh, panas-panaskan badan dengan sedikit intro. Kerja kat mana, dan bidang kepakaran. Yang lain nanti kitorang tanya2 la ye. \n\nKalau nak kenal orang2 dalam ni, klik /ahli atau taip /siapa [nama ahli]. Untuk mendaftar, klik /daftar.'
             })
         } else if (data.text.charAt(0) === '/') {
             var a = data.text.split(' ');
@@ -45,7 +45,7 @@ bot.on('message', function(data) {
                 console.log(error);
                 bot.sendMessage({
                     chat_id: data.chat.id,
-                    text: 'Belum reti la macam mana nak ' + a
+                    text: 'Belum reti la macam mana nak ' + a + '.\n Kalau nak tolong saya pandai, boleh fork dan PR https://github.com/r0lodex/jomwebot'
                 })
             }
         }
