@@ -15,3 +15,17 @@
 Point Members API url to your local in `env.js`:
 
     process.env['JWJ_API_URL'] = 'http://localhost:4000';    
+
+For testing:
+
+    npm install -g mocha
+
+Then run:
+
+    mocha
+
+    Command test
+    ✓ should show username
+
+
+  1 passing (46ms)
